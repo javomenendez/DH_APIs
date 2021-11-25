@@ -26,7 +26,7 @@ const moviesController = {
                 include : ['genre']
             })
             .then(movie => {
-                fetch(`http://www.omdbapi.com/?apikey=d5edecbf&t=${movie.title}`)
+                fetch(`http://www.omdbapi.com/?apikey=${apiKey}&t=${movie.title}`)
                 .then(response => response.json()).catch(e=>console.log(e))
                 .then(m=>{
                     let poster = 'https://linnea.com.ar/wp-content/uploads/2018/09/404PosterNotFoundReverse.jpg'
