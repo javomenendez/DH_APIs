@@ -3,13 +3,13 @@ const db = require('../database/models');
 const sequelize = db.sequelize;
 const { Op } = require("sequelize");
 const moment = require('moment');
-
+const fetch = require('node-fetch')
 
 //Aqui tienen otra forma de llamar a cada uno de los modelos
 const Movies = db.Movie;
 const Genres = db.Genre;
 const Actors = db.Actor;
-
+const apiKey = 'd5edecbf'
 
 const moviesController = {
     'list': (req, res) => {
@@ -26,7 +26,15 @@ const moviesController = {
                 include : ['genre']
             })
             .then(movie => {
-                res.render('moviesDetail.ejs', {movie});
+                fetch(`http://www.omdbapi.com/?apikey=d5edecbf&t=${movie.title}`)
+                .then(response => response.json()).catch(e=>console.log(e))
+                .then(m=>{
+                    let poster = 'https://linnea.com.ar/wp-content/uploads/2018/09/404PosterNotFoundReverse.jpg'
+                    if(m.Response=='True')
+                        poster = m.Poster
+                    res.render('moviesDetail.ejs', {movie, poster});
+                }).catch(e=>console.log(e))
+                
             });
     },
     'new': (req, res) => {

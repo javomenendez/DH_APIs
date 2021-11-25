@@ -18,6 +18,9 @@ img{
 figure{
   width: 20%;
 }
+.poster{
+  width:200px
+}
 .titulo{
   text-align: center;
 }
